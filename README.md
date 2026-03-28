@@ -62,7 +62,7 @@ project_root/
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/chest-xray-adversarial-robustness.git
+git clone https://github.com/yrf123456/chest-xray-adversarial-robustness.git
 cd chest-xray-adversarial-robustness
 
 # Create virtual environment
@@ -175,5 +175,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Contact
 
 - **Author**: Ruifeng Yan
-- **Email**: [your-email@example.com]
-- **Project Link**: [https://github.com/YOUR_USERNAME/chest-xray-adversarial-robustness](https://github.com/YOUR_USERNAME/chest-xray-adversarial-robustness)
+- **Email**: 2542795@dundee.ac.uk
+- **Project Link**: [https://github.com/yrf123456/chest-xray-adversarial-robustness](https://github.com/yrf123456/chest-xray-adversarial-robustness)
