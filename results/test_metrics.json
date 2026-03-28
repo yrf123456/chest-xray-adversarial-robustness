@@ -1,0 +1,30 @@
+{
+  "model_path": "E:\\project_root\\project_root\\models\\resnet18_chestxray.pth",
+  "test_csv": "E:\\project_root\\project_root\\dataset\\processed\\test.csv",
+  "test_size": 25583,
+  "batch_size": 32,
+  "num_workers": 4,
+  "accuracy": 0.685142,
+  "auc": 0.703712,
+  "confusion_matrix": {
+    "TN": 5315,
+    "FP": 4544,
+    "FN": 3511,
+    "TP": 12213
+  },
+  "metrics": {
+    "precision": 0.72883,
+    "recall_sensitivity_tpr": 0.776711,
+    "specificity_tnr": 0.539101,
+    "fpr": 0.460899,
+    "fnr": 0.223289,
+    "f1": 0.752009,
+    "balanced_accuracy": 0.657906
+  },
+  "outputs": {
+    "roc_points_csv": "E:\\project_root\\project_root\\results\\roc_points_test.csv",
+    "roc_png": "E:\\project_root\\project_root\\results\\ROC.png"
+  }
+}
+
+

@@ -1,0 +1,25 @@
+{
+  "start_time": "2026-01-14 16:58:35",
+  "epochs": 10,
+  "batch_size": 32,
+  "lr": 0.0001,
+  "best_val_acc": 0.6961,
+  "total_images_seen": 778110,
+  "total_train_time_sec": 18497.05,
+  "avg_epoch_time_sec": 1849.57,
+  "epoch_times_sec": [
+    1536.79,
+    1476.55,
+    4521.97,
+    1422.54,
+    1485.37,
+    1463.13,
+    2080.66,
+    1472.74,
+    1528.58,
+    1507.36
+  ],
+  "model_path": "E:\\project_root\\project_root\\models\\resnet18_chestxray.pth"
+}
+
+

@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.env
+*.egg-info/
+dist/
+build/
+
+# Dataset (too large for GitHub)
+dataset/raw/
+dataset/processed/images_all/
+dataset/processed/*.csv
+
+# Model checkpoints (too large)
+models/*.pth
+models/*.pt
+
+# Results (optional - can include if needed)
+# results/
+
+# Thesis documents
+thesis/*.pdf
+thesis/*.docx
+thesis/*.pptx
+thesis/count_words.py
+thesis/create_*.py
+thesis/*.aux
+thesis/*.log
+thesis/*.out
+thesis/*.toc
+thesis/*.bbl
+thesis/*.blg
+thesis/*.synctex.gz
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs
+*.log
