@@ -1,12 +1,12 @@
 """
-生成毕设需要的可视化图片：
-1. Grad-CAM 可视化（干净 vs 对抗样本）
-2. 对抗样本对比图
+Generate visualization images for thesis:
+1. Grad-CAM visualization (clean vs adversarial samples)
+2. Adversarial examples comparison
 """
 
 import os
 
-# 解决 OpenMP 库冲突问题
+# Solve OpenMP library conflict problem
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
 import random
 import numpy as np
@@ -24,7 +24,7 @@ import matplotlib.gridspec as gridspec
 
 
 # ---------------- Paths ----------------
-# ROOT 指向 project_root（脚本的父目录）
+# ROOT points to project_root (parent directory of script)
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(ROOT, "dataset", "processed")
 IMAGE_DIR = os.path.join(DATA_DIR, "images_all")
@@ -145,15 +145,15 @@ def tensor_to_numpy(tensor):
 
 
 # ============================================
-# 可视化 1: Grad-CAM 对比（干净 vs 对抗）
+# Visualization 1: Grad-CAM Comparison (Clean vs Adversarial)
 # ============================================
 def visualize_gradcam_comparison(model, dataset, n_samples=4, eps=2/255):
-    """生成 Grad-CAM 对比图：干净图像 vs 对抗图像"""
-    print("\n=== 生成 Grad-CAM 可视化 ===")
+    """Generate Grad-CAM comparison: clean images vs adversarial images"""
+    print("\n=== Generating Grad-CAM Visualization ===")
     
     gradcam = GradCAM(model, model.backbone.layer4)
     
-    # 随机选择样本
+    # Randomly select samples
     random.seed(42)
     indices = random.sample(range(len(dataset)), n_samples)
     
@@ -164,11 +164,11 @@ def visualize_gradcam_comparison(model, dataset, n_samples=4, eps=2/255):
         x = x.unsqueeze(0).to(device)
         y_tensor = torch.tensor([y]).to(device)
         
-        # 生成对抗样本
+        # Generate adversarial sample
         with torch.enable_grad():
             x_adv = fgsm_attack(model, x, y_tensor, eps)
         
-        # 预测
+        # Prediction
         with torch.no_grad():
             pred_clean = model(x).argmax(1).item()
             pred_adv = model(x_adv).argmax(1).item()
@@ -177,7 +177,7 @@ def visualize_gradcam_comparison(model, dataset, n_samples=4, eps=2/255):
         cam_clean = gradcam(x, pred_clean)
         cam_adv = gradcam(x_adv, pred_adv)
         
-        # 绘制
+        # Plot
         img_clean = tensor_to_numpy(x)
         img_adv = tensor_to_numpy(x_adv)
         
@@ -209,11 +209,11 @@ def visualize_gradcam_comparison(model, dataset, n_samples=4, eps=2/255):
 
 
 # ============================================
-# 可视化 2: 对抗样本对比图
+# Visualization 2: Adversarial Examples Comparison
 # ============================================
 def visualize_adversarial_examples(model, dataset, n_samples=8, eps_list=None):
-    """生成对抗样本对比图"""
-    print("\n=== 生成对抗样本可视化 ===")
+    """Generate adversarial examples comparison"""
+    print("\n=== Generating Adversarial Examples Visualization ===")
     
     if eps_list is None:
         eps_list = [0, 1/255, 2/255, 4/255]
@@ -248,7 +248,7 @@ def visualize_adversarial_examples(model, dataset, n_samples=8, eps_list=None):
             axes[i, j].set_title(title, color=color, fontsize=9, pad=4)
             axes[i, j].axis('off')
         
-        # 最后一列显示扰动
+        # Last column shows perturbation
         perturbation = tensor_to_numpy(x_adv) - tensor_to_numpy(x)
         pert_vis = (perturbation - perturbation.min()) / (perturbation.max() - perturbation.min() + 1e-8)
         axes[i, -1].imshow(pert_vis)
@@ -265,11 +265,11 @@ def visualize_adversarial_examples(model, dataset, n_samples=8, eps_list=None):
 
 
 # ============================================
-# 可视化 3: 成功攻击案例展示
+# Visualization 3: Successful Attack Examples
 # ============================================
 def visualize_successful_attacks(model, dataset, n_samples=6, eps=2/255):
-    """展示攻击成功的案例"""
-    print("\n=== 生成成功攻击案例可视化 ===")
+    """Display successful attack examples"""
+    print("\n=== Generating Successful Attack Examples Visualization ===")
     
     successful = []
     
@@ -343,16 +343,16 @@ def visualize_successful_attacks(model, dataset, n_samples=6, eps=2/255):
 
 
 # ============================================
-# 主函数
+# Main Function
 # ============================================
 def main():
     print(f"Device: {device}")
     print(f"Model: {MODEL_PATH}")
     
-    # 加载模型
+    # Load model
     model = build_model()
     
-    # 加载数据集
+    # Load dataset
     tf = transforms.Compose([
         transforms.Resize((IMG_SIZE, IMG_SIZE)),
         transforms.ToTensor()
@@ -360,13 +360,13 @@ def main():
     dataset = NIHBinaryDataset(TEST_CSV, IMAGE_DIR, tf)
     print(f"Dataset size: {len(dataset)}")
     
-    # 生成可视化
+    # Generate visualizations
     visualize_gradcam_comparison(model, dataset, n_samples=4, eps=2/255)
     visualize_adversarial_examples(model, dataset, n_samples=6)
     visualize_successful_attacks(model, dataset, n_samples=6, eps=2/255)
     
-    print("\n=== 所有可视化完成! ===")
-    print(f"结果保存在: {RESULTS_DIR}")
+    print("\n=== All visualizations complete! ===")
+    print(f"Results saved to: {RESULTS_DIR}")
 
 
 if __name__ == "__main__":

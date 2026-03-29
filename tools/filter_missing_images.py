@@ -10,10 +10,10 @@ def filter_csv(csv_name):
     csv_path = os.path.join(PROCESSED_DIR, csv_name)
     df = pd.read_csv(csv_path)
 
-    # ① 一次性读取 images_all 中所有文件名
+    
     existing_files = set(os.listdir(IMAGE_DIR))
 
-    # ② 用内存集合判断（极快）
+    
     mask = df["Image Index"].isin(existing_files)
 
     removed = (~mask).sum()

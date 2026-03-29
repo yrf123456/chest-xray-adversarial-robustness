@@ -507,7 +507,7 @@ This section describes the methodology for evaluating adversarial robustness in 
 
 \subsection{Dataset Selection and Formulation}
 
-We use the NIH ChestX-ray14 dataset \cite{wang2017} for several reasons:
+Use the NIH ChestX-ray14 dataset \cite{wang2017} for several reasons:
 \begin{itemize}[leftmargin=*]
     \item \textbf{Scale:} 112,120 images provide sufficient data for training robust models and statistically meaningful evaluation
     \item \textbf{Clinical relevance:} Chest X-ray is the most common radiological examination worldwide
@@ -515,11 +515,11 @@ We use the NIH ChestX-ray14 dataset \cite{wang2017} for several reasons:
     \item \textbf{Public availability:} Enables reproducibility of our experiments
 \end{itemize}
 
-We formulate a \textbf{binary classification task} (disease vs. no finding) rather than multi-label classification. This choice is motivated by: (1) clearer interpretation of adversarial robustness---we directly measure if attacks flip the disease/healthy decision; (2) clinical relevance---screening to identify abnormal cases is the fundamental first step in radiology; (3) simpler evaluation and visualization. The resulting dataset has 60\% disease cases and 40\% healthy cases, split into 70\% training, 10\% validation, and 20\% test (25,583 test images).
+Formulate a \textbf{binary classification task} (disease vs. no finding) rather than multi-label classification. This choice is motivated by: (1) clearer interpretation of adversarial robustness---we directly measure if attacks flip the disease/healthy decision; (2) clinical relevance---screening to identify abnormal cases is the fundamental first step in radiology; (3) simpler evaluation and visualization. The resulting dataset has 60\% disease cases and 40\% healthy cases, split into 70\% training, 10\% validation, and 20\% test (25,583 test images).
 
 \subsection{Model Architecture Selection}
 
-We choose \textbf{ResNet-18} \cite{he2016} as the backbone for the following reasons:
+Choose \textbf{ResNet-18} \cite{he2016} as the backbone for the following reasons:
 \begin{itemize}[leftmargin=*]
     \item \textbf{Balance of capacity and efficiency:} Deep enough to learn meaningful features, but computationally tractable for large-scale adversarial evaluation (11.7M parameters)
     \item \textbf{Well-established baseline:} Widely used in medical imaging, enabling fair comparison with prior work
@@ -527,11 +527,11 @@ We choose \textbf{ResNet-18} \cite{he2016} as the backbone for the following rea
     \item \textbf{Gradient accessibility:} Clean gradient computation is essential for gradient-based adversarial attacks
 \end{itemize}
 
-We embed ImageNet normalization within the model's forward pass, ensuring adversarial perturbations are computed in the original [0, 1] pixel space for interpretable $\epsilon$ values.
+Embed ImageNet normalization within the model's forward pass, ensuring adversarial perturbations are computed in the original [0, 1] pixel space for interpretable $\epsilon$ values.
 
 \subsection{Adversarial Attack Methods}
 
-We select \textbf{FGSM} and \textbf{PGD} as representative attacks for the following reasons:
+Select \textbf{FGSM} and \textbf{PGD} as representative attacks for the following reasons:
 \begin{itemize}[leftmargin=*]
     \item \textbf{Coverage of attack types:} FGSM (single-step) and PGD (iterative) represent the two main categories of gradient-based attacks
     \item \textbf{Established benchmarks:} Both are standard attacks in adversarial robustness literature, enabling comparison with prior work
@@ -541,7 +541,7 @@ We select \textbf{FGSM} and \textbf{PGD} as representative attacks for the follo
 
 \subsubsection{Threat Model}
 
-We use the $L_\infty$-bounded threat model: $\|x_{adv} - x\|_\infty \leq \epsilon$. This is the standard choice in adversarial robustness research because it bounds per-pixel changes, directly relating to visual imperceptibility. We evaluate at $\epsilon \in \{0, 0.25/255, 0.5/255, 0.75/255, 1/255, 2/255\}$, spanning imperceptible to barely visible perturbations.
+Using the $L_\infty$-bounded threat model: $\|x_{adv} - x\|_\infty \leq \epsilon$. This is the standard choice in adversarial robustness research because it bounds per-pixel changes, directly relating to visual imperceptibility. Evaluate at $\epsilon \in \{0, 0.25/255, 0.5/255, 0.75/255, 1/255, 2/255\}$, spanning imperceptible to barely visible perturbations.
 
 \subsubsection{FGSM}
 
@@ -557,11 +557,11 @@ PGD \cite{madry2018} iteratively refines the perturbation:
 \begin{equation}
     x^{t+1} = \Pi_{B_\epsilon(x)} \left( x^t + \alpha \cdot \text{sign}(\nabla_{x^t} \mathcal{L}(\theta, x^t, y)) \right)
 \end{equation}
-We use 10 iterations with $\alpha = \epsilon/4$. PGD is considered one of the strongest first-order attacks and serves as a more rigorous robustness test than FGSM.
+Using 10 iterations with $\alpha = \epsilon/4$. PGD is considered one of the strongest first-order attacks and serves as a more rigorous robustness test than FGSM.
 
 \subsection{Evaluation Metrics}
 
-We use a comprehensive set of metrics to capture different aspects of model performance and robustness:
+Using a comprehensive set of metrics to capture different aspects of model performance and robustness:
 
 \textbf{Classification metrics:} Accuracy, AUC-ROC, Precision, Recall (Sensitivity), Specificity, and F1 Score. In these definitions, TP = correctly predicted disease, TN = correctly predicted healthy, FP = healthy predicted as disease, FN = disease predicted as healthy.
 
@@ -575,14 +575,14 @@ This is important for clinical deployment where probability estimates inform dec
 
 \subsection{Visualization Methods}
 
-We use \textbf{Grad-CAM} \cite{selvaraju2017} to understand how adversarial attacks affect model attention. This choice is motivated by:
+Using \textbf{Grad-CAM} \cite{selvaraju2017} to understand how adversarial attacks affect model attention. This choice is motivated by:
 \begin{itemize}[leftmargin=*]
     \item \textbf{Interpretability:} Produces spatial heatmaps showing which image regions influence predictions
     \item \textbf{Model-agnostic:} Works with any CNN without architecture modifications
     \item \textbf{Attack analysis:} Comparing clean vs. adversarial heatmaps reveals how perturbations disrupt feature extraction
 \end{itemize}
 
-We target ResNet-18's final convolutional layer (layer4), producing 7$\times$7 heatmaps upsampled to input dimensions. Adversarial perturbations are visualized by computing $\delta = x_{adv} - x$ and amplifying for visibility.
+The target ResNet-18's final convolutional layer (layer4), producing 7$\times$7 heatmaps upsampled to input dimensions. Adversarial perturbations are visualized by computing $\delta = x_{adv} - x$ and amplifying for visibility.
 
 %==============================================================================
 % SECTION 4: IMPLEMENTATION
@@ -1451,74 +1451,60 @@ The path from vulnerable research prototypes to robust clinical tools will requi
     \section{Risk Assessment}
     \label{app:risk}
     
-    A formal risk assessment was completed at the start of the project (see attached document: \texttt{SSEN Student Project Risk Assessment\_RuifengYan.docx}). The primary risks identified include:
+    A formal risk assessment was completed at the start of the project. The primary risks identified include data privacy considerations, potential misuse of adversarial attack research, and clinical misinterpretation of results. The complete risk assessment form is attached below.
     
-    \begin{itemize}
-        \item \textbf{Data Privacy:} The NIH ChestX-ray14 dataset is de-identified and publicly available, minimizing privacy risks.
-        \item \textbf{Misuse Potential:} Research on adversarial attacks could theoretically inform malicious actors. However, this risk is mitigated by the public nature of existing attack methods and the importance of understanding vulnerabilities for defense development.
-        \item \textbf{Clinical Misinterpretation:} Results should not be interpreted as indicating that all medical AI systems are unsafe, but rather as motivation for robustness testing.
-    \end{itemize}
+    \includepdf[pages=-,pagecommand={\thispagestyle{plain}},scale=0.85]{media/SSEN Student Project Risk Assessment_RuifengYan.pdf}
     
     \section{Ethics Form}
     \label{app:ethics}
     
-    The DIICSU Honours Project Ethics Form was completed and submitted (see attached document: \texttt{DIICSU Honours Project Ethics Form——Ruifeng Yan.docx}). This project uses only publicly available, de-identified data (NIH ChestX-ray14) and does not involve human subjects research. No additional ethics approval was required.
+    The DIICSU Honours Project Ethics Form was completed and submitted. This project uses only publicly available, de-identified data (NIH ChestX-ray14) and does not involve human subjects research. No additional ethics approval was required. The complete ethics form is attached below.
+    
+    \includepdf[pages=-,pagecommand={\thispagestyle{plain}},scale=0.85]{media/DIICSU Honours Project Ethics Form——Ruifeng Yan.pdf}
     
     \section{Project Plan and Gantt Chart}
     \label{app:gantt}
     
-    A detailed project plan was created using a Gantt chart (see attached document: \texttt{Project Gantt Chart -Ruifeng Yan.xlsx}). The project was completed in the following phases:
+    A detailed project plan was created using a Gantt chart. The project was completed in the following phases: Literature Review (Weeks 1-5), Prototype Experimentation (Weeks 6-10), Dataset Preparation (Weeks 11-13), Model Training (Weeks 14-15), Attack Implementation (Weeks 16-17), Robustness Evaluation (Weeks 18-20), Visualization and Analysis (Weeks 21-23), Report Writing (Weeks 24-26), and Contingency Buffer (Weeks 27-28). The complete Gantt chart is attached below.
     
-    \begin{enumerate}
-        \item \textbf{Literature Review (Weeks 1-5):} Comprehensive survey of adversarial ML and medical imaging literature, covering FGSM, PGD, and C\&W attacks.
-        \item \textbf{Prototype Experimentation (Weeks 6-10):} Implementation of miniature pipeline using a small chest X-ray dataset to validate core components.
-        \item \textbf{Dataset Preparation (Weeks 11-13):} Download, preprocessing, and partitioning of NIH ChestX-ray14 dataset.
-        \item \textbf{Model Training (Weeks 14-15):} Training and validation of baseline ResNet-18 model with ImageNet pre-training.
-        \item \textbf{Attack Implementation (Weeks 16-17):} Implementation of FGSM and PGD adversarial attacks.
-        \item \textbf{Robustness Evaluation (Weeks 18-20):} Comprehensive evaluation with accuracy-epsilon curves and quantitative metrics.
-        \item \textbf{Visualization and Analysis (Weeks 21-23):} Grad-CAM visualization, adversarial example generation, and failure mode analysis.
-        \item \textbf{Report Writing (Weeks 24-26):} Documentation and thesis writing.
-        \item \textbf{Contingency Buffer (Weeks 27-28):} Reserved time for unexpected issues and final revisions.
-    \end{enumerate}
+    \includepdf[pages=-,pagecommand={\thispagestyle{plain}},scale=0.85]{media/Project Gantt Chart -Ruifeng Yan.pdf}
     
     \section{Midterm Report}
     \label{app:midterm}
     
-    A midterm report was submitted documenting progress at the project's midpoint. The report detailed:
-    
-    \begin{itemize}
-        \item Project aims, objectives, and SMART goals
-        \item Summary of completed work including literature review, environment setup, and prototype experimentation
-        \item Initial results demonstrating unified L2 robustness curves for ResNet18 and DenseNet121
-        \item Plan for remaining work and personal reflection
-    \end{itemize}
-    
-    The full midterm report is included as a separate PDF document: \texttt{Honours Project Midterm Report - Ruifeng Yan.pdf}.
+    A midterm report was submitted documenting progress at the project's midpoint. The report detailed project aims, objectives, SMART goals, summary of completed work including literature review, environment setup, prototype experimentation, initial results, and plan for remaining work. The full midterm report is attached below.
     
     \includepdf[pages=-,pagecommand={\thispagestyle{plain}},scale=0.85]{media/Honours Project Midterm Report - Ruifeng Yan.pdf}
     
     \section{AI Declaration}
+    \label{app:ai}
     
-    The following AI tools were used in this project:
+    The AI Declaration form documents the use of AI tools in this project. The following AI tools were used: GitHub Copilot for code completion and debugging suggestions, and ChatGPT/Claude for clarifying technical concepts and debugging assistance. All AI-generated content was reviewed, verified, and modified as necessary. The core research methodology, experimental design, and analysis were conducted independently. The complete AI Declaration form is attached below.
     
-    \begin{itemize}
-        \item \textbf{GitHub Copilot:} Used for code completion and debugging suggestions
-        \item \textbf{ChatGPT/Claude:} Used for clarifying technical concepts and debugging assistance
-    \end{itemize}
-    
-    All AI-generated content was reviewed, verified, and modified as necessary. The core research methodology, experimental design, and analysis were conducted independently.
+    \includepdf[pages=-,pagecommand={\thispagestyle{plain}},scale=0.85]{media/AI Declaration.pdf}
     
     \section{Supervisor Meeting Minutes}
+    \label{app:meetings}
     
-    Regular meetings were held with the supervisor throughout the project. Key discussion points included:
+    Regular meetings were held with the supervisor throughout the project. Key discussion points included initial project scoping and objectives, dataset selection and preprocessing approach, attack method selection, evaluation metric design, results interpretation and presentation, and report structure. Meeting minutes and presentation materials are available at:
     
+    \url{https://dmail-my.sharepoint.com/:f:/g/personal/2542795_dundee_ac_uk/IgBBE2TdTCKDQYA3g-QGS61bAaCqYINiPJrrCKetxe2VaGo?e=4MI5Hr}
+    
+    \section{Source Code}
+    \label{app:code}
+    
+    The complete source code for this project, including attack implementations, evaluation scripts, and visualization tools, is publicly available on GitHub:
+    
+    \url{https://github.com/yrf123456/chest-xray-adversarial-robustness}
+    
+    The repository contains:
     \begin{itemize}
-        \item Initial project scoping and objectives
-        \item Dataset selection and preprocessing approach
-        \item Attack method selection (FGSM vs PGD vs C\&W)
-        \item Evaluation metric design
-        \item Results interpretation and presentation
-        \item Report structure and writing
+        \item FGSM and PGD attack implementations
+        \item Robustness evaluation pipeline
+        \item Grad-CAM visualization tools
+        \item Model training scripts
+        \item Dataset preprocessing utilities
+        \item All experimental results and figures
     \end{itemize}
     
 \end{appendices}
