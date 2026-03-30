@@ -751,29 +751,29 @@ Before evaluating adversarial robustness, we establish the baseline performance 
 The trained ResNet-18 model achieves the following performance on clean test data, as shown in Table \ref{tab:baseline}. The evaluation is conducted on the complete test set of 25,583 chest X-ray images, providing statistically robust performance estimates.
 
 \begin{table}[H]
-    \centering
-    \caption{Baseline Model Performance on Clean Test Data (n=25,583)}
+\centering
+\caption{Baseline Model Performance on Clean Test Data (n=25,583)}
     \label{tab:baseline}
-    \begin{tabular}{lc}
-        \toprule
-        \textbf{Metric} & \textbf{Value} \\
-        \midrule
+\begin{tabular}{lc}
+\toprule
+\textbf{Metric} & \textbf{Value} \\
+\midrule
         Accuracy & 68.51\% \\
-        AUC-ROC & 0.7037 \\
-        Precision & 72.88\% \\
-        Recall (Sensitivity) & 77.67\% \\
-        Specificity & 53.91\% \\
+AUC-ROC & 0.7037 \\
+Precision & 72.88\% \\
+Recall (Sensitivity) & 77.67\% \\
+Specificity & 53.91\% \\
         F1 Score & 75.20\% \\
-        Balanced Accuracy & 65.79\% \\
+Balanced Accuracy & 65.79\% \\
         Expected Calibration Error & 0.126 \\
-        \bottomrule
-    \end{tabular}
+\bottomrule
+\end{tabular}
 \end{table}
 
 The confusion matrix in Table \ref{tab:confusion_baseline} shows the detailed prediction distribution.
 
 \begin{table}[H]
-    \centering
+\centering
     \caption{Confusion Matrix on Clean Test Data}
     \label{tab:confusion_baseline}
     \begin{tabular}{lcc}
@@ -805,21 +805,21 @@ We now present the core findings of our adversarial robustness evaluation, begin
 Table \ref{tab:fgsm} presents comprehensive model performance metrics under FGSM attack across six perturbation budgets ranging from clean ($\epsilon=0$) to $\epsilon=2/255$.
 
 \begin{table}[H]
-    \centering
+\centering
     \caption{Model Performance Under FGSM Attack}
     \label{tab:fgsm}
-    \begin{tabular}{ccccccc}
-        \toprule
+\begin{tabular}{ccccccc}
+\toprule
         \textbf{$\epsilon$} & \textbf{Accuracy} & \textbf{AUC} & \textbf{Sensitivity} & \textbf{Specificity} & \textbf{ECE} & \textbf{Acc. Drop} \\
-        \midrule
+\midrule
         0 (Clean) & 68.51\% & 0.7037 & 77.67\% & 53.91\% & 0.126 & -- \\
         0.25/255 & 54.22\% & 0.4587 & 58.43\% & 47.58\% & 0.156 & 14.29\% \\
         0.5/255 & 38.11\% & 0.2500 & 35.21\% & 42.73\% & 0.205 & 30.40\% \\
         0.75/255 & 25.15\% & 0.1124 & 18.67\% & 35.48\% & 0.317 & 43.36\% \\
         1/255 & 15.96\% & 0.0438 & 8.24\% & 28.27\% & 0.388 & 52.55\% \\
         2/255 & 2.80\% & 0.0004 & 0.45\% & 6.54\% & 0.459 & 65.71\% \\
-        \bottomrule
-    \end{tabular}
+\bottomrule
+\end{tabular}
 \end{table}
 
 \subsubsection{Detailed Analysis of FGSM Results}
@@ -861,21 +861,21 @@ Projected Gradient Descent (PGD) represents a significantly stronger attack than
 Table \ref{tab:pgd} presents comprehensive results under PGD attack across the same perturbation budgets evaluated for FGSM.
 
 \begin{table}[H]
-    \centering
+\centering
     \caption{Model Performance Under PGD Attack (10 steps, $\alpha=\epsilon/4$)}
     \label{tab:pgd}
-    \begin{tabular}{ccccccc}
-        \toprule
+\begin{tabular}{ccccccc}
+\toprule
         \textbf{$\epsilon$} & \textbf{Accuracy} & \textbf{AUC} & \textbf{Sensitivity} & \textbf{Specificity} & \textbf{ECE} & \textbf{Acc. Drop} \\
-        \midrule
+\midrule
         0 (Clean) & 68.51\% & 0.7037 & 77.67\% & 53.91\% & 0.126 & -- \\
         0.25/255 & 53.22\% & 0.4441 & 56.89\% & 47.37\% & 0.159 & 15.29\% \\
         0.5/255 & 33.23\% & 0.2003 & 27.45\% & 42.44\% & 0.241 & 35.28\% \\
         0.75/255 & 16.76\% & 0.0572 & 9.23\% & 28.74\% & 0.370 & 51.75\% \\
         1/255 & 7.24\% & 0.0107 & 2.18\% & 15.31\% & 0.424 & 61.27\% \\
         2/255 & 0.08\% & 0.0000 & 0.01\% & 0.19\% & 0.419 & 68.43\% \\
-        \bottomrule
-    \end{tabular}
+\bottomrule
+\end{tabular}
 \end{table}
 
 \subsubsection{Detailed Analysis of PGD Results}
@@ -950,20 +950,20 @@ A systematic comparison between FGSM and PGD provides critical insights for unde
 Table \ref{tab:comparison} presents a detailed comparison of FGSM and PGD effectiveness across all metrics and perturbation levels.
 
 \begin{table}[H]
-    \centering
+\centering
     \caption{FGSM vs PGD: Accuracy Comparison and Gap Analysis}
     \label{tab:comparison}
     \begin{tabular}{cccccc}
-        \toprule
+\toprule
         $\epsilon$ & FGSM Acc. & PGD Acc. & Absolute Gap & Relative Gap & PGD Advantage \\
-        \midrule
+\midrule
         0.25/255 & 54.22\% & 53.22\% & 1.00\% & 1.8\% & 1.02$\times$ \\
         0.5/255 & 38.11\% & 33.23\% & 4.88\% & 12.8\% & 1.15$\times$ \\
         0.75/255 & 25.15\% & 16.76\% & 8.39\% & 33.4\% & 1.50$\times$ \\
         1/255 & 15.96\% & 7.24\% & 8.72\% & 54.6\% & 2.20$\times$ \\
         2/255 & 2.80\% & 0.08\% & 2.72\% & 97.1\% & 35.0$\times$ \\
-        \bottomrule
-    \end{tabular}
+\bottomrule
+\end{tabular}
 \end{table}
 
 Several important observations emerge from this comparison:
@@ -1009,7 +1009,7 @@ While quantitative metrics reveal the severity of adversarial vulnerability, vis
 Figure \ref{fig:adversarial} shows chest X-ray images with increasing perturbation magnitudes alongside amplified perturbation visualizations. The visualization demonstrates the key challenge of adversarial attacks: perturbations that are completely invisible to human observers can completely flip model predictions.
 
 \begin{figure}[htbp]
-    \centering
+\centering
     \includegraphics[width=0.95\textwidth]{adversarial_examples.png}
     \caption{Adversarial examples with increasing perturbation magnitude ($\epsilon \in \{0, 1/255, 2/255, 4/255\}$). Each row represents a different test sample. Green labels indicate correct classification; red labels indicate misclassification. The rightmost column shows the amplified perturbation for the largest $\epsilon$ value (4/255), computed as the pixel-wise difference between the adversarial and clean images, normalized and amplified for visibility.}
     \label{fig:adversarial}
@@ -1031,7 +1031,7 @@ Figure \ref{fig:adversarial} shows chest X-ray images with increasing perturbati
 Figure \ref{fig:successful} presents a gallery of successful adversarial attacks, providing case-by-case analysis of how perturbations affect classification.
 
 \begin{figure}[htbp]
-    \centering
+\centering
     \includegraphics[width=0.7\textwidth]{successful_attacks.png}
     \caption{Examples of successful adversarial attacks at $\epsilon=0.0078$ (2/255). Each row shows: clean image with correct prediction (left), adversarial image with flipped prediction (center), and amplified perturbation (right). All cases show disease-positive ground truth incorrectly classified as healthy after perturbation.}
     \label{fig:successful}
@@ -1057,7 +1057,7 @@ Figure \ref{fig:successful} presents a gallery of successful adversarial attacks
 Gradient-weighted Class Activation Mapping (Grad-CAM) provides insight into which image regions the model attends to when making predictions. Figure \ref{fig:gradcam} compares attention maps between clean and adversarial images.
 
 \begin{figure}[htbp]
-    \centering
+\centering
     \includegraphics[width=0.9\textwidth]{gradcam_comparison.png}
     \caption{Grad-CAM visualization comparing model attention on clean versus adversarial images. Hot colors (red/yellow) indicate regions of high importance for prediction; cool colors (blue) indicate low importance. Each row shows the same image under clean and adversarial conditions.}
     \label{fig:gradcam}
@@ -1092,7 +1092,7 @@ These quantitative measures confirm that adversarial perturbations cause fundame
 Robustness curves provide a comprehensive visualization of model vulnerability across the entire perturbation spectrum. Figure \ref{fig:robustness_curves} shows the complete accuracy and AUC robustness curves for both FGSM and PGD attacks.
 
 \begin{figure}[htbp]
-    \centering
+\centering
     \begin{subfigure}[b]{0.48\textwidth}
         \includegraphics[width=\textwidth]{fgsm_robustness_curve.png}
         \caption{FGSM Robustness Curve}
@@ -1295,24 +1295,24 @@ Several factors may contribute to this severe vulnerability:
 The comparison between FGSM and PGD attacks provides important insights for robustness evaluation and defense development. PGD consistently outperforms FGSM across all perturbation levels, confirming that iterative optimization finds more effective adversarial examples within the same perturbation budget.
 
 The gap between FGSM and PGD is largest at intermediate epsilon values. At $\epsilon=0.75/255$, FGSM achieves 25.15\% accuracy while PGD achieves 16.76\%, a difference of 8.39 percentage points. This gap reflects PGD's ability to iteratively refine the perturbation direction, escaping suboptimal solutions that FGSM's single step may find. At very small epsilon values, both attacks have limited effectiveness, while at large epsilon values, both achieve near-complete success, narrowing the gap.
-
+    
 The practical implications of this comparison are significant for robustness evaluation. Evaluating robustness using only FGSM would overestimate the model's resilience to adversarial attacks. For accurate robustness assessment, stronger attacks like PGD should be used. Furthermore, if defenses are developed against FGSM alone, they may fail against PGD, providing a false sense of security. PGD serves as a more stringent test of adversarial robustness.
-
+    
 The computational cost difference between FGSM and PGD is also noteworthy. FGSM requires only a single forward and backward pass, while PGD with 10 iterations requires approximately 10 times the computation. For large-scale evaluation across multiple epsilon values and the entire test set, FGSM enables rapid assessment while PGD provides more thorough evaluation at higher computational cost. A practical approach is to use FGSM for initial screening and PGD for final robustness certification.
-
+    
 \subsubsection{Clinical Implications}
-
+    
 The demonstrated vulnerabilities have serious implications for the clinical deployment of AI-assisted chest X-ray interpretation systems:
 
 \begin{itemize}[leftmargin=*]
     \item \textbf{Diagnostic integrity risk:} Malicious actors could potentially manipulate chest X-ray images to alter diagnostic outcomes. This could enable insurance fraud, where images are modified to show non-existent conditions to justify reimbursement for unnecessary procedures. Conversely, images could be modified to hide true pathology, potentially for malpractice concealment or insurance fraud. The imperceptibility of effective perturbations makes such manipulation extremely difficult to detect through visual inspection.
-    
+
     \item \textbf{Trust and adoption challenges:} Knowledge of adversarial vulnerability may undermine clinician trust in AI diagnostic systems. If radiologists are aware that AI predictions can be manipulated by invisible perturbations, they may be reluctant to rely on AI assistance, reducing the potential benefits of these technologies. Building trust requires demonstrating robustness or developing detectable-manipulation mechanisms.
-    
+
     \item \textbf{Regulatory implications:} As regulatory bodies become aware of adversarial vulnerabilities, robustness testing may become a requirement for medical AI approval. The FDA and other regulatory agencies are increasingly focused on AI safety and reliability. Developers may need to demonstrate adversarial robustness as part of the approval process, potentially requiring adversarial training or other defense mechanisms.
-    
+
     \item \textbf{Security infrastructure requirements:} Deploying AI systems for medical imaging may require additional security measures to protect against adversarial attacks. This could include secure transmission channels to prevent image modification in transit, integrity verification mechanisms to detect tampering, and continuous monitoring for anomalous predictions that might indicate attack attempts.
-    
+
     \item \textbf{Workflow integration considerations:} The integration of AI predictions into clinical workflows must account for adversarial vulnerability. AI systems might be positioned as decision support tools requiring human verification rather than autonomous diagnostic agents. Radiologists should be trained to recognize situations where AI predictions should be viewed with particular skepticism.
 \end{itemize}
 
