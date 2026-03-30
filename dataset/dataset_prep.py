@@ -23,11 +23,11 @@ def merge_images():
 
             print(f"  Processing {folder} ...")
 
-            # 检查内部是否还有 images/ 子目录
+            
             inner = os.path.join(fp, "images")
             src_dir = inner if os.path.isdir(inner) else fp
 
-            # 遍历里面的图片文件
+            
             for img in os.listdir(src_dir):
                 src_path = os.path.join(src_dir, img)
                 if os.path.isfile(src_path):

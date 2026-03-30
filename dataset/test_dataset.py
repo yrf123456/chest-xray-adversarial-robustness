@@ -7,13 +7,12 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 
 
-# ===== 路径（直接用你现在已有的）=====
 BASE_DIR = "E:/project_root/project_root/dataset/processed"
 CSV_PATH = os.path.join(BASE_DIR, "train.csv")
 IMAGE_DIR = os.path.join(BASE_DIR, "images_all")
 
 
-# ===== Dataset：直接用你生成的 CSV =====
+
 class NIHChestXrayDataset(Dataset):
     def __init__(self, csv_file, image_dir, transform=None):
         self.df = pd.read_csv(csv_file)
@@ -38,14 +37,14 @@ class NIHChestXrayDataset(Dataset):
         return image, label
 
 
-# ===== 图像预处理（最基础版本）=====
+
 transform = transforms.Compose([
     transforms.Resize((224, 224)),
     transforms.ToTensor(),
 ])
 
 
-# ===== 主程序：真正“跑一遍数据集”=====
+
 if __name__ == "__main__":
     dataset = NIHChestXrayDataset(
         csv_file=CSV_PATH,
